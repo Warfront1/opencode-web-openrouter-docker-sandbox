@@ -69,12 +69,12 @@ This section is only for advanced users who would want to toggle the air gap off
 
 **Remove Air Gap (Grant Internet Access):**
 ```bash
-docker network connect opencode-isolated-sandbox_internet_access opencode-app
+docker network connect opencode-web-openrouter-docker-sandbox_internet_access opencode-app
 ```
 
 **Restore Air Gap (Revoke Internet Access):**
 ```bash
-docker network disconnect opencode-isolated-sandbox_internet_access opencode-app
+docker network disconnect opencode-web-openrouter-docker-sandbox_internet_access opencode-app
 ```
 
 **Verify Network Status:**
