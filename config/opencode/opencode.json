@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openrouter": {
+      "options": {
+        "baseURL": "http://nginx-api-gateway/api/v1"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+services:
+  nginx-api-gateway:
+    image: nginx:alpine
+    container_name: nginx-api-gateway
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:?error}
+    volumes:
+      - ./config/nginx/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    ports:
+      - "4096:4096"
+    networks:
+      - opencode_isolated
+      - internet_access
+
+  opencode-app:
+    image: ghcr.io/anomalyco/opencode
+    container_name: opencode-app
+    depends_on:
+      - nginx-api-gateway
+    environment:
+      - OPENROUTER_API_KEY=SANDBOX_MANAGED
+      - OPENCODE_CONFIG=/config/opencode.json
+    volumes:
+      - ./config/opencode/opencode.json:/config/opencode.json:ro
+      - ${PROJECT_DIR:?error}:/workspace
+    working_dir: /workspace
+    networks:
+      - opencode_isolated
+    command: ["web", "--port", "4096", "--hostname", "0.0.0.0"]
+    stdin_open: true
+    tty: true
+
+networks:
+  opencode_isolated:
+    internal: true
+  internet_access:
+    internal: false
